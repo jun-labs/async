@@ -113,8 +113,6 @@ userRepository.clear()
 
 ## Getting Started
 
-Put the application.yml, application-test.yml before running the application.
-
 > You should install jdk 17 or higher. <br/>
 
 <br/><br/><br/>
