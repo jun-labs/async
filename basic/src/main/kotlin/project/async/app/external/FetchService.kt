@@ -15,9 +15,9 @@ class FetchService {
     private val restTemplate = RestTemplate()
     private val webClient = WebClient.create()
 
-    fun fetchSimpleHtmlPage(): String? {
+    fun fetchApacheHtmlPage(): String? {
         log.info("------------------------------------------------------------x>")
-        return restTemplate.getForObject(SIMPLE_HTML_URL, String::class.java)
+        return restTemplate.getForObject(APACHE_URL, String::class.java)
     }
 
     fun fetchThymeLeafPage(): String? {
@@ -25,10 +25,10 @@ class FetchService {
         return restTemplate.getForObject(THYMELEAF_URL, String::class.java)
     }
 
-    suspend fun fetchSimpleHtmlPageWithSuspend(): String? {
+    suspend fun fetchApacheHtmlPageWithSuspend(): String? {
         log.info("------------------------------------------------------------x>")
         return withContext(Dispatchers.IO) {
-            restTemplate.getForObject(SIMPLE_HTML_URL, String::class.java)
+            restTemplate.getForObject(APACHE_URL, String::class.java)
         }
     }
 
@@ -36,7 +36,6 @@ class FetchService {
         log.info("------------------------------------------------------------x>")
         return webClient.get()
             .uri(THYMELEAF_URL)
-            .accept(MediaType.TEXT_HTML)
             .retrieve()
             .bodyToMono(String::class.java)
             .awaitSingle()
@@ -94,7 +93,7 @@ class FetchService {
     }
 
     companion object {
-        private const val SIMPLE_HTML_URL = "http://help.websiteos.com/websiteos/example_of_a_simple_html_page.htm"
+        private const val APACHE_URL = "https://httpd.apache.org/ABOUT_APACHE.html"
         private const val THYMELEAF_URL = "https://www.thymeleaf.org/documentation.html"
     }
 }
