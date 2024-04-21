@@ -92,7 +92,7 @@ class CoroutineUnitTest {
     @DisplayName("비동기 연산을 두 개 이상 실행해서 결과를 알 수 있다.")
     fun multiAsyncTest() = runTest {
         val simpleHtmlPage = async {
-            fetchService.fetchSimpleHtmlPage()
+            fetchService.fetchApacheHtmlPage()
         }
         val thymeleafPage = async {
             fetchService.fetchThymeLeafPage()
@@ -147,7 +147,7 @@ class CoroutineUnitTest {
 
         val simpleHtmlPageDeferred = List(100) {
             async {
-                fetchService.fetchSimpleHtmlPageWithSuspend()
+                fetchService.fetchApacheHtmlPageWithSuspend()
             }
         }
 
@@ -163,9 +163,9 @@ class CoroutineUnitTest {
     fun coroutineMockTest() = runTest {
         val fetchService = mockk<FetchService>()
 
-        coEvery { fetchService.fetchSimpleHtmlPageWithSuspend() } returns "Simple Html"
+        coEvery { fetchService.fetchApacheHtmlPageWithSuspend() } returns "Simple Html"
 
-        val result = fetchService.fetchSimpleHtmlPageWithSuspend()
+        val result = fetchService.fetchApacheHtmlPageWithSuspend()
 
         assertEquals("Simple Html", result)
     }
@@ -174,14 +174,14 @@ class CoroutineUnitTest {
     @DisplayName("Coroutine에서 스코프를 사용할 수 있다. 순서는 스코프 순서를 지킨다.")
     fun coroutineScopeTest() = runTest {
         val fetchService = mockk<FetchService>()
-        coEvery { fetchService.fetchSimpleHtmlPageWithSuspend() } returns "Simple Html"
+        coEvery { fetchService.fetchApacheHtmlPageWithSuspend() } returns "Simple Html"
         coEvery { fetchService.fetchThymeLeafPageWithSuspend() } returns "ThymeLeaf Html"
 
         launch {
             log.info(fetchService.fetchThymeLeafPageWithSuspend())
             coroutineScope {
                 launch {
-                    log.info(fetchService.fetchSimpleHtmlPageWithSuspend())
+                    log.info(fetchService.fetchApacheHtmlPageWithSuspend())
                 }
             }
         }
